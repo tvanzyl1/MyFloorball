@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080d1b">
+  <meta name="description" content="A phone-first floorball game and team tracker." />
+  <title>MyFloorball — Court control</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#home" aria-label="MyFloorball home"><span class="brand-mark">MF</span><span>MY<span class="brand-accent">FLOORBALL</span></span></a><nav aria-label="Main navigation"><button class="nav-button active" data-view="game">Game</button><button class="nav-button" data-view="team">Team</button></nav><button id="backup-button" class="icon-button" aria-label="Data backup" title="Data backup">⇧</button></header>
+  <main id="app" class="shell" aria-live="polite"></main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="status-dialog" class="dialog"><form method="dialog" id="status-form"><div class="dialog-head"><div><p class="eyebrow">PLAYER STATUS</p><h2 id="status-title">Update player</h2></div><button class="icon-button close-dialog" aria-label="Close">×</button></div><input type="hidden" id="status-player"><label>Incident<select id="status-kind"><option value="card">Card</option><option value="injury">Injury</option><option value="send-off">Send-off</option><option value="clear">Clear status</option></select></label><label>Note <span class="muted">(optional)</span><input id="status-note" maxlength="100" placeholder="e.g. Yellow card, 8th minute"></label><div class="dialog-actions"><button class="button ghost close-dialog">Cancel</button><button class="button primary" id="save-status">Save status</button></div></form></dialog>
+  <dialog id="backup-dialog" class="dialog"><form method="dialog" id="backup-form"><div class="dialog-head"><div><p class="eyebrow">YOUR DATA, YOUR DEVICE</p><h2>Backup & restore</h2></div><button class="icon-button close-dialog" aria-label="Close">×</button></div><p class="muted">Your team and game are saved in this browser. Export a JSON backup to move them to another device.</p><div class="backup-actions"><button type="button" id="export-button" class="button primary">↓ Export JSON</button><label class="button ghost file-button">↑ Import JSON<input id="import-file" type="file" accept="application/json,.json"></label></div><p class="small muted">Import checks the file before replacing your current saved data.</p><div class="dialog-actions"><button class="button ghost close-dialog">Done</button></div></form></dialog>
+</body>
+</html>
