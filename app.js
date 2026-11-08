@@ -1,4 +1,4 @@
-import { createInitialData, loadData, saveData, makeGame, proposeSub, applySub, elapsedGameSeconds, validateData } from './core.js?v=20261108.1';
+import { createInitialData, loadData, saveData, makeGame, proposeSub, applySub, elapsedGameSeconds, validateData } from './core.js?v=20261108.2';
 
 let data = loadData();
 let view = 'game';

@@ -2,7 +2,7 @@ export const STORAGE_KEY = 'myfloorball-data';
 export const DATA_VERSION = 1;
 
 export function createInitialData() {
-  return { version: DATA_VERSION, team: { name: 'The Night Owls', players: [] }, game: null };
+  return { version: DATA_VERSION, team: { name: 'The Knight Ballers', players: [] }, game: null };
 }
 
 export function validateData(value) {
@@ -62,13 +62,12 @@ export function proposeSub(game) {
   if (game.method === 'single') {
     const keeper = game.rotateKeeper ? nextKeeper(game) : null;
     const keeperNeedsEntry = keeper && game.bench.includes(keeper);
-    // A keeper entering from the bench needs its own outgoing player. Do not
-    // also select that same bench player for the one-at-a-time field swap.
-    const fieldBench = game.bench.filter(id => !keeperNeedsEntry || id !== keeper);
+    // In single mode, a keeper coming from the bench uses this interval's
+    // one substitution. Otherwise rotate one outfield player as usual.
     const fieldOff = active.find(id => id !== keeper);
-    const swaps = [];
-    if (fieldOff && fieldBench.length) swaps.push({ off: fieldOff, on: fieldBench[0] });
-    if (keeperNeedsEntry) swaps.push({ off: game.goalkeeper, on: keeper });
+    const swaps = keeperNeedsEntry
+      ? [{ off: game.goalkeeper, on: keeper }]
+      : fieldOff ? [{ off: fieldOff, on: game.bench[0] }] : [];
     return { swaps, keeper };
   }
   const candidateKeeper = game.rotateKeeper ? nextKeeper(game) : null;
