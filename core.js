@@ -60,11 +60,15 @@ export function proposeSub(game) {
   const active = game.onCourt.filter(id => id !== game.goalkeeper);
   if (!active.length) return null;
   if (game.method === 'single') {
-    const off = active[0];
-    const on = game.bench[0];
     const keeper = game.rotateKeeper ? nextKeeper(game) : null;
-    const swaps = [{ off, on }];
-    if (keeper && game.bench.includes(keeper) && keeper !== on) swaps.push({ off: game.goalkeeper, on: keeper });
+    const keeperNeedsEntry = keeper && game.bench.includes(keeper);
+    // A keeper entering from the bench needs its own outgoing player. Do not
+    // also select that same bench player for the one-at-a-time field swap.
+    const fieldBench = game.bench.filter(id => !keeperNeedsEntry || id !== keeper);
+    const fieldOff = active.find(id => id !== keeper);
+    const swaps = [];
+    if (fieldOff && fieldBench.length) swaps.push({ off: fieldOff, on: fieldBench[0] });
+    if (keeperNeedsEntry) swaps.push({ off: game.goalkeeper, on: keeper });
     return { swaps, keeper };
   }
   const candidateKeeper = game.rotateKeeper ? nextKeeper(game) : null;

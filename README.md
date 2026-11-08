@@ -32,6 +32,8 @@ Use the top-right backup button to export a versioned JSON file or import one. I
 
 The service worker caches the app shell after its first HTTPS load. The relative asset paths and manifest scope support both a root domain and a GitHub Pages project path. The workflow in `.github/workflows/pages.yml` publishes the repository root from the `main` branch. Set the repository's Pages source to **GitHub Actions** in repository settings.
 
+When publishing a frontend change, update the `v` query string on the CSS and JavaScript assets in `index.html`, the `core.js` import in `app.js`, and the matching entries in `sw.js`. This forces phones and the offline shell to fetch the new asset versions.
+
 ## Development
 
 The app uses native browser modules and Node's built-in test runner; no install step is needed.
